@@ -682,6 +682,7 @@ Gradio — Interactive demo framework.
 > ping --author
 
 > Target     : Deepak — Software Engineer | Applied AI/ML
+> 
 > University : SRM University AP , Amravathi, AP
 > Major      : B.Tech — Big Data Analytics
 > Status     : [●] ONLINE — open to grad & junior opportunities
