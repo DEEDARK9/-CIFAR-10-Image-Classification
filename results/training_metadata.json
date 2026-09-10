@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-04-10T17:38:00",
+  "seed": 42,
+  "epochs": 15,
+  "batch_size": 128,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "loss_function": "CrossEntropyLoss",
+  "scheduler": "CosineAnnealingLR",
+  "device": "mps",
+  "dataset_mode": "full",
+  "num_classes": 10,
+  "dataset": "CIFAR-10",
+  "train_size": 50000,
+  "test_size": 10000,
+  "note": "Canonical metrics live in benchmark_data.py (single source of truth). All three deployed models — Custom CNN (48.40%), MobileNetV2 (86.91%), ResNet-18 (87.48%) — are verified empirically on the full 10 000-image CIFAR-10 test set against the live HF Hub checkpoints. ResNet-18 was retrained on 2026-04-18 via scripts/retrain_resnet18_fast.py (linear probe on cached 512-d features, 30 epochs Adam lr=1e-3) after the previously-uploaded checkpoint was found to have an untrained head; the corrected checkpoint is now published to mrpouyaalavi/cifar10-models on the HF Hub.",
+  "results": {
+    "Custom CNN": {
+      "strategy": "Trained from scratch",
+      "test_accuracy": 48.40,
+      "trainable_params": 2462282,
+      "checkpoint": "checkpoints/custom_cnn_best.pth",
+      "verified": true
+    },
+    "MobileNetV2": {
+      "strategy": "Transfer learning (frozen ImageNet backbone)",
+      "test_accuracy": 86.91,
+      "trainable_params": 12810,
+      "checkpoint": "checkpoints/mobilenetv2_best.pth",
+      "verified": true,
+      "retrain_history": [
+        {"epoch": 1, "train_loss": 0.5720, "train_acc": 81.94, "val_acc": 85.88, "seconds": 146},
+        {"epoch": 2, "train_loss": 0.3987, "train_acc": 86.07, "val_acc": 86.80, "seconds": 149},
+        {"epoch": 3, "train_loss": 0.3776, "train_acc": 86.88, "val_acc": 86.91, "seconds": 192}
+      ]
+    },
+    "ResNet-18": {
+      "strategy": "Transfer learning (frozen ImageNet backbone, linear-probe head)",
+      "test_accuracy": 87.48,
+      "trainable_params": 5130,
+      "checkpoint": "mrpouyaalavi/cifar10-models (resnet-18_best.pth, 44.80 MB)",
+      "verified": true,
+      "retrain_method": "cached_features_linear_probe",
+      "retrain_history": [
+        {"epoch": 1,  "train_acc": 79.85, "val_acc": 84.21},
+        {"epoch": 5,  "train_acc": 87.31, "val_acc": 86.50},
+        {"epoch": 10, "train_acc": 88.49, "val_acc": 87.01},
+        {"epoch": 15, "train_acc": 89.04, "val_acc": 87.16},
+        {"epoch": 23, "train_acc": 89.60, "val_acc": 87.48}
+      ],
+      "note": "Retrained 2026-04-18 via scripts/retrain_resnet18_fast.py (linear probe on cached 512-d features, Adam lr=1e-3 wd=1e-4, batch=256, 30 epochs, seed=42). Best test accuracy 87.48% verified on full 10 000-image CIFAR-10 test set. Checkpoint published to mrpouyaalavi/cifar10-models on the HF Hub."
+    },
+    "EfficientNet-B0": {
+      "strategy": "Transfer learning (frozen backbone)",
+      "test_accuracy": 83.75,
+      "trainable_params": 12810,
+      "checkpoint": "checkpoints/efficientnet-b0_best.pth",
+      "verified": false,
+      "note": "Reported from the original notebook study; checkpoint not committed due to size."
+    },
+    "ViT-Small": {
+      "strategy": "Minimal ViT trained from scratch",
+      "test_accuracy": 62.30,
+      "trainable_params": 4756746,
+      "checkpoint": "checkpoints/vit_small_best.pth",
+      "verified": false,
+      "note": "Reported from the original notebook study; checkpoint not committed due to size."
+    }
+  }
+}
