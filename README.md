@@ -682,8 +682,8 @@ Gradio — Interactive demo framework.
 > ping --author
 
 > Target     : Deepak — Software Engineer | Applied AI/ML
-> University : Macquarie University, Sydney, NSW
-> Major      : B.IT — Artificial Intelligence & Web/App Development
+> University : SRM University AP , Amravathi, AP
+> Major      : B.Tech — Big Data Analytics
 > Status     : [●] ONLINE — open to grad & junior opportunities
 
 
